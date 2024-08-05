@@ -1,0 +1,53 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <RootNamespace>EventSystem.Application</RootNamespace>
+        <AssemblyName>EventSystem.Application</AssemblyName>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="Common\Dtos\**" />
+      <Compile Remove="Common\HelperMethods\**" />
+      <Compile Remove="Customer\**" />
+      <Compile Remove="NewFolder1\**" />
+      <Compile Remove="NewFolder2\**" />
+      <Compile Remove="Orders\**" />
+      <Compile Remove="ProductImages\**" />
+      <EmbeddedResource Remove="Common\Dtos\**" />
+      <EmbeddedResource Remove="Common\HelperMethods\**" />
+      <EmbeddedResource Remove="Customer\**" />
+      <EmbeddedResource Remove="NewFolder1\**" />
+      <EmbeddedResource Remove="NewFolder2\**" />
+      <EmbeddedResource Remove="Orders\**" />
+      <EmbeddedResource Remove="ProductImages\**" />
+      <None Remove="Common\Dtos\**" />
+      <None Remove="Common\HelperMethods\**" />
+      <None Remove="Customer\**" />
+      <None Remove="NewFolder1\**" />
+      <None Remove="NewFolder2\**" />
+      <None Remove="Orders\**" />
+      <None Remove="ProductImages\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+        <PackageReference Include="DevExtreme.AspNet.Data" Version="4.0.0" />
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.2" />
+        <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Domain\Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="DTOs\Event\" />
+      <Folder Include="DTOs\User\" />
+      <Folder Include="UserMangment\Queries\" />
+    </ItemGroup>
+
+</Project>

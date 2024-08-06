@@ -45,7 +45,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="DTOs\Event\" />
       <Folder Include="DTOs\User\" />
       <Folder Include="UserMangment\Queries\" />
     </ItemGroup>

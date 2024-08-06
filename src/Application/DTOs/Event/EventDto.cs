@@ -1,7 +1,8 @@
-﻿namespace EventSystem.Application.EventManagement.Commands.CreateEventCommand;
+﻿namespace EventSystem.Application.DTOs.Event;
 
 using AutoMapper;
 using EventSystem.Application.Common.Mappings;
+using EventSystem.Application.EventManagement.Commands.CreateEventCommand;
 using EventSystem.Domain.Entities;
 
 

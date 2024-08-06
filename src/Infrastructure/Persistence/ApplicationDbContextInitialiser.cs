@@ -3,11 +3,11 @@ using EventSystem.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using EventSystem.Application.UserMangment.UserRoles;
 using EventSystem.Domain.Repositories;
 using EventSystem.Domain.Entities;
 using EventSystem.Domain.ValueObjects;
 using EventSystem.Infrastructure.Services;
+using EventSystem.Application.Common.Security;
 
 namespace EventSystem.Infrastructure.Persistence;
 

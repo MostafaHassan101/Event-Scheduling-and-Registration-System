@@ -17,7 +17,6 @@ public record CreateEventCommand : IRequest
     public string City { get; private set; }
     public string Country { get; private set; }
     public string PostalCode { get; private set; }
-    private readonly List<User> _participants = new List<User>();
 }
 
 public class CreateEventCommandHandler : IRequestHandler<CreateEventCommand>

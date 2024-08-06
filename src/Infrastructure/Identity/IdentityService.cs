@@ -4,12 +4,12 @@ using EventSystem.Application.Common.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using EventSystem.Application.UserMangment.UserRoles;
 using EventSystem.Domain.Entities;
 using EventSystem.Domain.ValueObjects;
 using System.Text.RegularExpressions;
 using EventSystem.Infrastructure.Services;
 using EventSystem.Application.Common.Exceptions;
+using EventSystem.Application.Common.Security;
 
 namespace EventSystem.Infrastructure.Identity;
 

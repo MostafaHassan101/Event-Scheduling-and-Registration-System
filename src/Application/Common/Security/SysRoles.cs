@@ -1,4 +1,4 @@
-﻿namespace EventSystem.Application.UserMangment.UserRoles;
+﻿namespace EventSystem.Application.Common.Security;
 
 public static class SysRoles
 {

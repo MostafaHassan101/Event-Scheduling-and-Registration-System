@@ -12,7 +12,10 @@ namespace EventSystem.Infrastructure.Repository
         public UserRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
         }
-
+        public override async Task<User> GetByIdAsync(int id)
+        {
+            return await _dbContext.DomainUsers.Include(e => e.Events).FirstOrDefaultAsync(e => e.Id == id);
+        }
         public async Task<User?> GetUserByEmailAsync(string email)
         {
             return await _dbContext.DomainUsers

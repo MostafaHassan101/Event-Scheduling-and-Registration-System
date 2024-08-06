@@ -1,5 +1,6 @@
 ﻿using EventSystem.Domain.Entities.Base;
 using EventSystem.Domain.Interfaces;
+using System.Text.Json.Serialization;
 
 namespace EventSystem.Domain.Entities
 {

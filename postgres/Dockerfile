@@ -1,0 +1,4 @@
+
+FROM postgres:14
+ENV POSTGRES_PASSWORD=Your_password123
+ENV POSTGRES_DB=MyDatabase

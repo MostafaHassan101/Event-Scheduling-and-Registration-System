@@ -1,4 +1,5 @@
 ﻿using EventSystem.Application.Common.Models;
+using EventSystem.Domain.Entities;
 using System.Dynamic;
 
 namespace EventSystem.Application.Common.Interfaces;
@@ -6,7 +7,7 @@ namespace EventSystem.Application.Common.Interfaces;
 public interface IIdentityService
 {
     Task<(Result Result, string UserId)> CreateUserAsync<T>(T applicationUserDto, string password);
-    Task<(Result Result, string UserId)> CreateUserAsync(string email, string name, string phone, string password, string confirmPassword);
+    Task<(Result Result, string UserId)> CreateUserAsync(User domainUser, string password, string confirmPassword);
     Task<string?> GetUserNameAsync(string userId);
     Task<string?> GetUserIdAsync(string userName);
     Task<bool> UserIsExist(string email);

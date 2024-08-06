@@ -18,17 +18,13 @@ namespace API.Controllers
         /// </summary>
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesDefaultResponseType]
         public async Task<IActionResult> GetAllEvents()
         {
             var command = new GetAllEventsQuery { };
             return Ok(await Mediator.Send(command));
         }
 
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesDefaultResponseType]
+        [HttpGet("{eventId}")]
         public async Task<IActionResult> GetEventById(int eventId)
         {
             var @eventQuery  = new GetEventByIdQuery { EventId = eventId };
@@ -36,8 +32,6 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesDefaultResponseType]
         public async Task<IActionResult> CreateEvent([FromBody] CreateEventCommand createEventCommand)
         {
             await Mediator.Send(createEventCommand);

@@ -43,6 +43,7 @@ public class EventRegistrationService : IEventRegistrationService
             throw new ArgumentException("Event not found", nameof(eventId));
 
         user.RemoveEvent(@event);
+        @event.RemoveParticipant(user);
 
         await _userRepository.UpdateAsync(user);
         await _eventRepository.UpdateAsync(@event);

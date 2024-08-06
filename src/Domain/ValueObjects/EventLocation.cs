@@ -1,28 +1,37 @@
 ﻿
 using EventSystem.Domain.ValueObjects.Base;
+using System.Xml.Linq;
 
 namespace EventSystem.Domain.ValueObjects
 {
     public class EventLocation : ValueObject
     {
-        public string Value { get; private set; }
+        public string Address { get; private set; }
+        public string City { get; private set; }
+        public string Country { get; private set; }
+        public string PostalCode { get; private set; }
 
+        public EventLocation(string address, string city, string country, string postalCode)
+        {
+            Address = CheckAddress(address);
+            City = city;
+            Country = country;
+            PostalCode = postalCode;
+        }
         private EventLocation() { }
 
-        public EventLocation(string value)
+        string CheckAddress(string address)
         {
-            if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentException("Location cannot be empty", nameof(value));
-
-            if (value.Length > 200)
-                throw new ArgumentException("Location is too long", nameof(value));
-
-            Value = value;
+            if(string.IsNullOrEmpty(address))
+                throw new ArgumentNullException("address");
+            return address;
         }
-
         protected override IEnumerable<object> GetObjectValues()
         {
-            yield return Value;
+            yield return Address;
+            yield return City;
+            yield return Country;
+            yield return PostalCode;
         }
     }
 }

@@ -11,7 +11,7 @@ public class ApplicationUser : IdentityUser
 
     private ApplicationUser(): base() { }
 
-    public ApplicationUser(User user) : base(user.Email)
+    public ApplicationUser(User user) : base()
     {
         NormalizedUserName = user.Name;
         Email = user.Email;

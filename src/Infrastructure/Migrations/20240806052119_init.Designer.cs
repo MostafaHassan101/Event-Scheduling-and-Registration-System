@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EventSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240805203903_init")]
+    [Migration("20240806052119_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -454,10 +454,25 @@ namespace EventSystem.Infrastructure.Migrations
                             b1.Property<int>("EventId")
                                 .HasColumnType("integer");
 
-                            b1.Property<string>("Value")
+                            b1.Property<string>("Address")
                                 .IsRequired()
                                 .HasColumnType("text")
-                                .HasColumnName("Location");
+                                .HasColumnName("Address");
+
+                            b1.Property<string>("City")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("City");
+
+                            b1.Property<string>("Country")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("Country");
+
+                            b1.Property<string>("PostalCode")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("PostalCode");
 
                             b1.HasKey("EventId");
 

@@ -70,7 +70,10 @@ namespace EventSystem.Infrastructure.Migrations
                     Description = table.Column<string>(type: "text", nullable: false),
                     Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Time = table.Column<TimeSpan>(type: "interval", nullable: false),
-                    Location = table.Column<string>(type: "text", nullable: false)
+                    Address = table.Column<string>(type: "text", nullable: false),
+                    City = table.Column<string>(type: "text", nullable: false),
+                    Country = table.Column<string>(type: "text", nullable: false),
+                    PostalCode = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {

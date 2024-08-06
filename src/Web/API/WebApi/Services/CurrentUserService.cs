@@ -12,15 +12,6 @@ public class CurrentUserService : ICurrentUserService
     }
 
     public string UserId => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
-    public int DomainUserId => TryGetDomainUserId();
+    public string UserName => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.Email)?? throw new UnauthorizedAccessException();
 
-    int TryGetDomainUserId()
-    {
-        var userId = _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
-
-        if(int.TryParse(userId, out var domainUserId))
-             return domainUserId;
-
-        throw new UnauthorizedAccessException();
-    }
 }

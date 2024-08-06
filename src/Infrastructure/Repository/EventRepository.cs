@@ -12,13 +12,22 @@ namespace EventSystem.Infrastructure.Repository
         public EventRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
         }
-
+        public override async Task<Event> GetByIdAsync(int id)
+        {
+            return await _dbContext.Events.Include(e => e.Participants).FirstOrDefaultAsync(e => e.Id == id);
+        }
+        public async Task AddBulk(IEnumerable<Event> events)
+        {
+            await _dbContext.AddRangeAsync(events);
+            await _dbContext.SaveChangesAsync();
+        }
         public async Task<IEnumerable<Event>> GetAllEventsByUserIdAsync(int userId)
         {
-            return await _dbContext.Events
+            var result = await _dbContext.Events
                 .Include(e => e.Participants)
                 .Where(e => e.Participants.Any(u => u.Id == userId))
                 .ToListAsync();
+            return result;
         }
 
         public async Task<IEnumerable<Event>> GetEventsByDateAsync(EventDate date)

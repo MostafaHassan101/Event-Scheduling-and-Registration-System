@@ -1,4 +1,6 @@
-﻿namespace EventSystem.Application.Common.Models;
+﻿using System.Text.RegularExpressions;
+
+namespace EventSystem.Application.Common.Models;
 
 public class AppConstants
 {
@@ -20,5 +22,10 @@ public class AppConstants
     public const string Metas = "metas";
     public const string Model = "model";
     public const string Code = "Code";
+
+
+    /// regex pattern
+    public static Regex PasswordPattern = new Regex(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$");
+
 
 }

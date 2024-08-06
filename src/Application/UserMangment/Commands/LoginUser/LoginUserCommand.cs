@@ -22,14 +22,29 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, APIResp
     public async Task<APIResponse> Handle(LoginUserCommand request, CancellationToken cancellationToken)
 	{
 		APIResponse response = new APIResponse();
-		var token = await _userRegistrationService.LoginUserAsync(request.Email, request.Password, request.RememberMe);
-		if (token == null)
+		try
 		{
-			response.AddError("", "Invalid email or password");
+			var token = await _userRegistrationService.LoginUserAsync(request.Email, request.Password, request.RememberMe);
+			if (token == null)
+			{
+                response.clearBody();
+                response.StatusCode = AppConstants.NotFound;
+                response.AddError(AppConstants.Error, "Invalid email or password");
+                return response;
+			}
+            response.clearBody();
+            response.StatusCode = AppConstants.Success;
+            response.AddModel(AppConstants.Model, token);
+            response.AddMeta(AppConstants.Message, "logged in Successfully");
+            return response;
+        }
+        catch (Exception ex) 
+		{
+            response.clearBody();
+            response.StatusCode = AppConstants.NotFound;
+            response.AddError(AppConstants.Error, "faild to login please try again later");
 			return response;
-		}
 
-		response.AddMeta("token", token);
-		return response;
+        }
 	}
 }

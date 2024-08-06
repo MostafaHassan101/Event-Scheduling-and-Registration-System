@@ -57,10 +57,10 @@ public class IdentityService : IIdentityService
     }
 
 
-    public async Task<(Result Result, string UserId)> CreateUserAsync(string email, string name, string phone, string password, string confirmPassword)
+    public async Task<(Result Result, string UserId)> CreateUserAsync(User domainUser, string password, string confirmPassword)
     {
-        var contactInfo = new ContactInformation(phone);
-        var domainUser = new User(name, email, contactInfo);
+        //var contactInfo = new ContactInformation(phone);
+        //var domainUser = new User(name, email, contactInfo);
 
         var user = new ApplicationUser(domainUser);
 
@@ -204,8 +204,9 @@ public class IdentityService : IIdentityService
         if (!string.Equals(password, confirmPassword))
             throw new ArgumentException("password and confirmPassword isn't match");
 
-        //if(Regex.IsMatch(password, pattern:  ))   // handel password pattern if needed
+        //if (!AppConstants.PasswordPattern.IsMatch(password))      // if needed
+        //    throw new ArgumentException("weak password");
 
-        return password;
+            return password;
     }
 }

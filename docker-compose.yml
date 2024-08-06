@@ -1,0 +1,47 @@
+version: '3.4'
+
+services:
+  # Define the PostgreSQL service
+  postgres:
+    build: 
+      context: ./postgres
+    container_name: postgres
+    environment:
+      POSTGRES_PASSWORD: "Your_password123"
+      POSTGRES_DB: "MyDatabase"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      retries: 5
+      start_period: 10s
+      timeout: 5s
+    networks:
+      - backend
+
+  # Define the web API service
+  webapi:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: webapi
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=postgres;Database=MyDatabase;Username=postgres;Password=Your_password123;
+    ports:
+      - "8080:80"
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  postgresdata:

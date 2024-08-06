@@ -1,4 +1,5 @@
 ﻿using EventSystem.Application.Common.Interfaces;
+using EventSystem.Domain.Repositories;
 using MediatR;
 
 namespace EventSystem.Application.EventRegistration.Commands.CancelUserRegistrationFromEvent;
@@ -13,17 +14,20 @@ public class CancelUserRegistrationFromEventCommandHandler : IRequestHandler<Can
 {
     private readonly IEventRegistrationService _eventRegistrationService;
     private readonly ICurrentUserService _currentUserService;
+    private readonly IUserRepository _userRepository;
 
-    public CancelUserRegistrationFromEventCommandHandler(IEventRegistrationService eventRegistrationService, ICurrentUserService currentUserService)
+    public CancelUserRegistrationFromEventCommandHandler(IEventRegistrationService eventRegistrationService, ICurrentUserService currentUserService, IUserRepository userRepository)
     {
         _eventRegistrationService = eventRegistrationService;
         _currentUserService = currentUserService;
+        _userRepository = userRepository;
     }
 
     public async Task Handle(CancelUserRegistrationFromEventCommand request, CancellationToken cancellationToken)
     {
-        var userId = _currentUserService.DomainUserId;
+        var username = _currentUserService.UserName;
+        var user = await _userRepository.GetUserByEmailAsync(username);
 
-        await _eventRegistrationService.CancelUserRegistrationAsync(userId, request.EventId);
+        await _eventRegistrationService.CancelUserRegistrationAsync(user.Id, request.EventId);
     }
 }

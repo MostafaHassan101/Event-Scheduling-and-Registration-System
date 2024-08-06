@@ -23,7 +23,10 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
         });
         builder.OwnsOne(e => e.Location, l =>
         {
-            l.Property(p => p.Value).HasColumnName("Location");
+            l.Property(p => p.Address).HasColumnName("Address");
+            l.Property(p => p.PostalCode).HasColumnName("PostalCode");
+            l.Property(p => p.City).HasColumnName("City");
+            l.Property(p => p.Country).HasColumnName("Country");
         });
 
         builder.HasMany(e => e.Participants)

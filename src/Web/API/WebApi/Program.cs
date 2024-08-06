@@ -2,6 +2,7 @@ using API;
 using EventSystem.Application;
 using EventSystem.Infrastructure;
 using EventSystem.Infrastructure.Persistence;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,7 +15,7 @@ builder.Services.AddWebServices();
 
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Event System API", Version = "v1" });
 });
 
 

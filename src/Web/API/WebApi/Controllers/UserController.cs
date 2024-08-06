@@ -1,4 +1,6 @@
-﻿using EventSystem.Application.EventManagement.Commands.CreateEventCommand;
+﻿using Azure;
+using EventSystem.Application.Common.Models;
+using EventSystem.Application.EventManagement.Commands.CreateEventCommand;
 using EventSystem.Application.UserMangment.Commands.LoginUser;
 using EventSystem.Application.UserMangment.Commands.RegisterUser;
 using Microsoft.AspNetCore.Authorization;
@@ -30,7 +32,18 @@ namespace API.Controllers
         [ProducesDefaultResponseType]
         public async Task<IActionResult> LoginUser([FromBody] LoginUserCommand loginUserCommand)
         {
-            return Ok(await Mediator.Send(loginUserCommand));
+            var response = await Mediator.Send(loginUserCommand);
+            switch (response.StatusCode)
+            {
+                case AppConstants.Success:
+                    return Ok(response.responsebody);
+                case AppConstants.UnAuthorized:
+                    return Unauthorized(response.responsebody);
+                case AppConstants.NotFound:
+                    return NotFound(response.responsebody);
+                default:
+                    return BadRequest(response.responsebody);
+            }
         }
     }
 }

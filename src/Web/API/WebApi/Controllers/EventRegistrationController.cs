@@ -19,22 +19,22 @@ namespace API.Controllers
         /// 	List all Users for an Event
         /// </summary>
 
-        [HttpGet]
+        [HttpGet("user")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> GetAllUsersForEvent(int eventId)
+        public async Task<IActionResult> GetAllUsersForEvent([FromQuery] int eventId)
         {
             var getAllUsersForEventQuery = new GetAllUsersForEventQuery { EventId = eventId};
-            await Mediator.Send(getAllUsersForEventQuery);
-            return Ok();
+            
+            return Ok(await Mediator.Send(getAllUsersForEventQuery));
         }
 
-        [HttpGet]
+        [HttpGet("userEvents")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> GetAllEventsForUser(int userId)
+        public async Task<IActionResult> GetAllEventsForUser()
         {
-            var getAllEventsForUserQuery = new GetAllEventsForUserQuery { UserId = userId };
+            var getAllEventsForUserQuery = new GetAllEventsForUserQuery { };
             
             return Ok(await Mediator.Send(getAllEventsForUserQuery));
         }
@@ -52,7 +52,7 @@ namespace API.Controllers
         [HttpPost("CancelUserRegistration")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> CancelUserRegistrationFromEvent(int userId, int eventId)
+        public async Task<IActionResult> CancelUserRegistrationFromEvent(int eventId)
         {
             var cancelUserRegistrationFromEvent = new CancelUserRegistrationFromEventCommand  { EventId = eventId };
             await Mediator.Send(cancelUserRegistrationFromEvent);

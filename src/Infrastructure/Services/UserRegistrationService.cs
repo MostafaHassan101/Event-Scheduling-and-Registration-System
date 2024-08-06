@@ -21,10 +21,14 @@ public class UserRegistrationService : IUserRegistrationService
         try
         {
             await _userRepository.AddAsync(user);
-            await _identityService.CreateUserAsync(user.Email, user.Name, user.ContactInformation.Value, password, confirmPass);
+            var domainUser = await _userRepository.GetUserByEmailAsync(user.Email);
+            var reuslt = await _identityService.CreateUserAsync(domainUser, password, confirmPass);
+            if(!reuslt.Result.Succeeded)
+                await _userRepository.DeleteAsync(user);
         }
         catch (Exception ex)
         {
+            await _userRepository.DeleteAsync(user);
             throw new BadRequestException("Faild to register user");
         }
     }

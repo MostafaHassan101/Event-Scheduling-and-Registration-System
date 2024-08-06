@@ -29,7 +29,7 @@ public class UserRegistrationService : IUserRegistrationService
         catch (Exception ex)
         {
             await _userRepository.DeleteAsync(user);
-            throw new BadRequestException("Faild to register user");
+            throw new BadRequestException("Faild to register user", ex.InnerException?? ex);
         }
     }
 

@@ -18,6 +18,8 @@ public class IdentityService : IIdentityService
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly IUserClaimsPrincipalFactory<ApplicationUser> _userClaimsPrincipalFactory;
+    private readonly RoleManager<IdentityRole> _roleManager;
+
     private readonly IAuthorizationService _authorizationService;
     private readonly IMapper _mapper;
     private readonly ITokenService<ApplicationUser> _tokenService;
@@ -28,7 +30,8 @@ public class IdentityService : IIdentityService
         IUserClaimsPrincipalFactory<ApplicationUser> userClaimsPrincipalFactory,
         IAuthorizationService authorizationService,
         IMapper mapper,
-        ITokenService<ApplicationUser> tokenService)
+        ITokenService<ApplicationUser> tokenService,
+        RoleManager<IdentityRole> roleManager)
     {
         _userManager = userManager;
         _signInManager = signInManager;
@@ -36,6 +39,7 @@ public class IdentityService : IIdentityService
         _authorizationService = authorizationService;
         _mapper = mapper;
         _tokenService = tokenService;
+        _roleManager = roleManager;
     }
 
     private async Task<ApplicationUser?> GetUserByEmailAsync(string email)
@@ -59,16 +63,16 @@ public class IdentityService : IIdentityService
 
     public async Task<(Result Result, string UserId)> CreateUserAsync(User domainUser, string password, string confirmPassword)
     {
-        //var contactInfo = new ContactInformation(phone);
-        //var domainUser = new User(name, email, contactInfo);
-
         var user = new ApplicationUser(domainUser);
 
         var result = await _userManager.CreateAsync(user, CheckPasswordValidation(password, confirmPassword));
 
         if (result.Succeeded)
         {
+            if (!await _roleManager.RoleExistsAsync(SysRoles.User))
+                await _roleManager.CreateAsync(new IdentityRole(SysRoles.User));
             await _userManager.AddToRoleAsync(user, SysRoles.User);
+
         }
 
         return (result.ToApplicationResult(), user.Id.ToString());
@@ -113,15 +117,12 @@ public class IdentityService : IIdentityService
     public async Task<bool> AuthorizeAsync(string userId, string policyName)
     {
         var user = _userManager.Users.SingleOrDefault(u => u.Id.ToString() == userId);
-        //var user = _userManager.Users.SingleOrDefault(u => u.Email == userId);
-
         if (user == null)
         {
             return false;
         }
 
         var principal = await _userClaimsPrincipalFactory.CreateAsync(user);
-        //var validatePassword = _userClaimsPrincipalFactory.
         var result = await _authorizationService.AuthorizeAsync(principal, policyName);
 
         return result.Succeeded;
@@ -159,7 +160,7 @@ public class IdentityService : IIdentityService
         return sign.Succeeded ? Result.Success() : Result.Failure(new List<string> { "Invalid login attempt." });
     }
 
-    public async Task<(Result,string?)> LoginUserAndGetTokenAsync(string email, string password, bool rememberMe)
+    public async Task<(Result, string?)> LoginUserAndGetTokenAsync(string email, string password, bool rememberMe)
     {
         var errors = new List<string>();
 
@@ -174,7 +175,7 @@ public class IdentityService : IIdentityService
         if (user is null)
             throw new NotFoundException("user not found");
 
-        return (Result.Success(),_tokenService.GenerateToken(user));
+        return (Result.Success(), _tokenService.GenerateToken(user));
     }
 
     public async Task<List<string>> GetUserRolesAsync(string userId)
@@ -207,6 +208,6 @@ public class IdentityService : IIdentityService
         //if (!AppConstants.PasswordPattern.IsMatch(password))      // if needed
         //    throw new ArgumentException("weak password");
 
-            return password;
+        return password;
     }
 }

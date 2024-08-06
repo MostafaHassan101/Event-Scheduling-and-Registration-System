@@ -27,7 +27,7 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile
-    container_name: webapi
+    container_name: EventScheduleAPI
     depends_on:
       postgres:
         condition: service_healthy

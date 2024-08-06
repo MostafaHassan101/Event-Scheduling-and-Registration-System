@@ -42,10 +42,10 @@ public class ApplicationDbContextInitialiser
             //{
             //    await _context.Database.MigrateAsync();
             //}
-            if (_context.Database.IsNpgsql())
-            {
-                await _context.Database.MigrateAsync();
-            }
+            //if (_context.Database.IsNpgsql())
+            //{
+            //    await _context.Database.MigrateAsync();
+            //}
         }
         catch (Exception ex)
         {
@@ -81,10 +81,11 @@ public class ApplicationDbContextInitialiser
     }
     private async Task SeedRolesAsync()
     {
-        if (!_context.Roles.Any())
+        if (!_roleManager.Roles.Any())
         {
             var roles = new List<IdentityRole> { new IdentityRole(SysRoles.Admin), new IdentityRole(SysRoles.User) };
-            await _context.AddRangeAsync(roles);
+            foreach (var role in roles)
+                await _roleManager.CreateAsync(role);
         }
     }
 

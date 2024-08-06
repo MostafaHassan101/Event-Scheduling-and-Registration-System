@@ -39,14 +39,24 @@ The solution is divided into four main projects following Clean Architecture pri
 - .NET Core 8 SDK
 
 
-### Setup and Installation
+## Setup and Installation
 
+### Docker Images and Usage
+This project uses Docker images for the API and PostgreSQL database. Follow these steps to pull and use the images:
+Pulling Docker Images
+To pull the Docker images, use the following commands:
+
+- Pull the PostgreSQL image:
+  - Copydocker `pull mostafahassanmo/postgres:v1.0`
+
+- Pull the .NET Core 8 API image:
+  - Copydocker `pull mostafahassanmo/eventscheduleapi:v1.0`
+
+### Development
 1. Clone the repository: `git clone hhttps://github.com/MostafaHassan101/Event-Scheduling-and-Registration-System.git`
 2. Navigate to the project directory `Event-Scheduling-and-Registration-System`
 
-## Development
-
-### Running Locally
+#### Running Locally
 
 1. Ensure you have .NET Core SDK installed
 2. Set up a local PostgreSQL database

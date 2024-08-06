@@ -14,6 +14,7 @@ This project is a .NET Core event scheduling and registration system that demons
 - PostgreSQL database
 - Logging and Exception Handling middleware
 - Secure user session and identity management
+- Deployment in Docker
 
 ## Technology Stack
 
@@ -47,10 +48,10 @@ Pulling Docker Images
 To pull the Docker images, use the following commands:
 
 - Pull the PostgreSQL image:
-  - Copydocker `pull mostafahassanmo/postgres:v1.0`
+    -  `pull mostafahassanmo/postgres:v1.0`
 
 - Pull the .NET Core 8 API image:
-  - Copydocker `pull mostafahassanmo/eventscheduleapi:v1.0`
+    -  `pull mostafahassanmo/eventscheduleapi:v1.0`
 
 ### Development
 1. Clone the repository: `git clone hhttps://github.com/MostafaHassan101/Event-Scheduling-and-Registration-System.git`
